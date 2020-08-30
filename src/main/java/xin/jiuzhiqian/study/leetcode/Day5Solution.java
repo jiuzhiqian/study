@@ -9,4 +9,11 @@ public class Day5Solution {
 
     }
 
+    public boolean isBalanced(TreeNode root) {
+
+    }
+
+    private boolean balance(TreeNode leftTree, TreeNode rightTree, int level) {
+
+    }
 }
