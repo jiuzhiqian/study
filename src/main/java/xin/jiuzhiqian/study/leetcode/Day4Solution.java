@@ -102,11 +102,7 @@ public class Day4Solution {
         if (p.val == q.val) {
             boolean left = isSameTree(p.left, q.left);
             boolean right = isSameTree(p.right, q.right);
-            if (left && right) {
-                return true;
-            } else {
-                return false;
-            }
+            return left && right;
         } else {
             return false;
         }
@@ -118,7 +114,7 @@ public class Day4Solution {
             return null;
         }
         ListNode next = head;
-        while (next != null && next.next != null) {
+        while (next.next != null) {
             if (next.val == next.next.val) {
                 next.next = next.next.next;
             } else {

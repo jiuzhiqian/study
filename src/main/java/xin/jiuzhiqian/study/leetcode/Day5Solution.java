@@ -9,11 +9,19 @@ public class Day5Solution {
 
     }
 
+    // 110
     public boolean isBalanced(TreeNode root) {
-
+        if (root == null) {
+            return true;
+        }
+        int dd = Math.abs(getDep(root.left) - getDep(root.right));
+        return dd <= 1;
     }
 
-    private boolean balance(TreeNode leftTree, TreeNode rightTree, int level) {
-
+    private int getDep(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return Math.max(getDep(node.left), getDep(node.right)) + 1;
     }
 }
