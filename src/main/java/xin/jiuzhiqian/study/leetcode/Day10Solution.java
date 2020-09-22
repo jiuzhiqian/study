@@ -20,11 +20,6 @@ public class Day10Solution {
         System.out.println(solution.repeatedSubstringPattern(s));
     }
 
-    // 461
-    public int hammingDistance(int x, int y) {
-        return Math.max(x, y);
-    }
-
     // 459 kmp todo
     public boolean repeatedSubstringPattern(String s) {
         return kmp(s + s, s);
