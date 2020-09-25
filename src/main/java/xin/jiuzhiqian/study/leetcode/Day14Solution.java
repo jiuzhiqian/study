@@ -2,9 +2,7 @@ package xin.jiuzhiqian.study.leetcode;
 
 import org.springframework.data.relational.core.sql.In;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author : zhou
@@ -12,10 +10,127 @@ import java.util.Stack;
 public class Day14Solution {
     public static void main(String[] args) {
         Day14Solution solution = new Day14Solution();
-        int[] nums = {1, 3, 5, 7};
+        int[] nums = {1, 0, 0};
         // System.out.println(Arrays.toString(solution.findErrorNums(nums)));
         // String s = "LLDDUURR";
-        System.out.println(solution.findLengthOfLCIS(nums));
+        String s = "abcdcbadd";
+        System.out.println(solution.isOneBitCharacter(nums));
+    }
+
+    // 717
+    public boolean isOneBitCharacter(int[] bits) {
+        if (bits.length < 3) {
+            return bits[0] == 0;
+        }
+        int index = -1;
+        for (int i = bits.length - 2; i >= 0; i--) {
+            if (bits[i] == 0) {
+                index = i;
+                break;
+            }
+        }
+        return index < 0 ? (bits.length - 1) % 2 == 0 : (bits.length - 2 - index) % 2 == 0;
+    }
+
+    // 697 读不懂题,卧槽,傻逼题
+    public int findShortestSubArray(int[] nums) {
+        return 0;
+    }
+
+    // 693
+    public boolean hasAlternatingBits(int n) {
+        int a = -1;
+        while (n > 0) {
+            if (a >= 0 && n % 2 == a) {
+                return false;
+            }
+            a = n % 2;
+            n /= 2;
+        }
+        return true;
+    }
+
+    // 690
+    public int getImportance(List<Employee> employees, int id) {
+        Map<Integer, List<Integer>> mapList = new HashMap<>();
+        Map<Integer, Integer> mapImportance = new HashMap<>();
+        for (Employee employee : employees) {
+            mapImportance.put(employee.id, employee.importance);
+            mapList.put(employee.id, employee.subordinates);
+        }
+        return getSum(id, 0, mapList, mapImportance);
+    }
+
+    private int getSum(int id, int count, Map<Integer, List<Integer>> mapList, Map<Integer, Integer> mapImportance) {
+        if (mapImportance.containsKey(id)) {
+            count += mapImportance.get(id);
+            if (mapList.get(id).size() != 0) {
+                for (int num : mapList.get(id)) {
+                    count = getSum(num, count, mapList, mapImportance);
+                }
+            }
+        }
+        return count;
+    }
+
+
+    // 682 傻逼题目，读题半天
+    public int calPoints(String[] ops) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (String op : ops) {
+            if (op.equals("+")) {
+                int top = stack.pop();
+                int newtop = top + stack.peek();
+                stack.push(top);
+                stack.push(newtop);
+            } else if (op.equals("C")) {
+                stack.pop();
+            } else if (op.equals("D")) {
+                stack.push(2 * stack.peek());
+            } else {
+                stack.push(Integer.valueOf(op));
+            }
+        }
+
+        int ans = 0;
+        for (int score : stack) {
+            ans += score;
+        }
+        return ans;
+    }
+
+    // 680
+    public boolean validPalindrome(String s) {
+        char[] cc = s.toCharArray();
+        boolean drome = true;
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (cc[left] != cc[right]) {
+                int len = right - left;
+                if (len == 1) {
+                    return true;
+                }
+                char[] cc1 = new char[len];
+                char[] cc2 = new char[len];
+                System.arraycopy(cc, left, cc1, 0, len);
+                System.arraycopy(cc, left + 1, cc2, 0, len);
+                return palindrome(cc1) || palindrome(cc2);
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    private boolean palindrome(char[] cc) {
+        int left = 0, right = cc.length - 1;
+        while (left < right) {
+            if (cc[left++] != cc[right--]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // 674
@@ -69,18 +184,20 @@ public class Day14Solution {
         int R = M.length, C = M[0].length;
         int[][] ans = new int[R][C];
 
-        for (int r = 0; r < R; ++r)
+        for (int r = 0; r < R; ++r) {
             for (int c = 0; c < C; ++c) {
                 int count = 0;
-                for (int nr = r - 1; nr <= r + 1; ++nr)
+                for (int nr = r - 1; nr <= r + 1; ++nr) {
                     for (int nc = c - 1; nc <= c + 1; ++nc) {
                         if (0 <= nr && nr < R && 0 <= nc && nc < C) {
                             ans[r][c] += M[nr][nc];
                             count++;
                         }
                     }
+                }
                 ans[r][c] /= count;
             }
+        }
         return ans;
 
         /*int len1 = M.length;
