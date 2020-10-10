@@ -12,6 +12,7 @@ public class Day15Solution {
     private int fixed_k;
 
     public static void main(String[] args) {
+        System.out.println(Math.pow(2, 3));
         Day15Solution solution = new Day15Solution();
         // String[] words = {"d", "do", "dog", "p", "pe", "pen", "peng", "pengu", "pengui", "penguin", "e", "el", "ele", "elep", "eleph", "elepha", "elephan", "elephant"};
         // int[] nums = {1, 7, 3, 6, 5, 6};
@@ -29,31 +30,29 @@ public class Day15Solution {
         System.out.println(solution.rotatedDigits(857));
     }
 
-    // 788
+    // 788 GG
     public int rotatedDigits(int N) {
-        int tmp = N;
-        int digits = 0;
-        int i = 0;
-        while (tmp >= 0) {
-            digits += getRotate(tmp % 10) * Math.pow(4, i++);
-            tmp = tmp / 10 - 1;
-            digits += Math.pow(4, ++i) * tmp;
+        int ans = 0;
+        for (int i = 1; i <= N; i++) {
+            if (good(i, false)) {
+                ans++;
+            }
         }
-        return digits;
+        return ans;
     }
 
-    private int getRotate(int n) {
-        if (n < 2) {
-            return 0;
-        } else if (n < 5) {
-            return 1;
-        } else if (n < 6) {
-            return 2;
-        } else if (n < 9) {
-            return 3;
-        } else {
-            return 4;
+    private boolean good(int n, boolean flag) {
+        if (n == 0) {
+            return flag;
         }
+        int d = n % 10;
+        if (d == 3 || d == 4 || d == 7) {
+            return false;
+        }
+        if (d == 0 || d == 1 || d == 8) {
+            return good(n / 10, flag);
+        }
+        return good(n / 10, true);
     }
 
     // 704
