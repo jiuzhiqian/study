@@ -1,5 +1,7 @@
 package xin.jiuzhiqian.study.leetcode;
 
+import sun.nio.ch.sctp.SendFailed;
+
 import java.util.*;
 
 /**
@@ -9,10 +11,236 @@ public class Day19Solution {
     public static void main(String[] args) {
         Day19Solution solution = new Day19Solution();
         int x = 2, y = 3, bound = 10;
-        int[] A = {1, 2, 3};
+        String[] A = {"bella", "label", "roller"};
+        int[] nums = {0, 2, 1, -6, 6, -7, 9, 1, 2, 0, 1};
         int K = 123;
         // System.out.println(solution.powerfulIntegers(x, y, bound));
-        System.out.println(solution.addToArrayForm(A, K));
+        // System.out.println(solution.largestSumAfterKNegations(nums, 6));
+        System.out.println(solution.canThreePartsEqualSum(nums));
+    }
+
+    // 1025 todo
+    public boolean divisorGame(int N) {
+        if (N == 1) {
+            return false;
+        }
+        boolean[] bp = new boolean[N + 1];
+        bp[1] = false;
+        bp[2] = true;
+        for (int i = 3; i <= N; i++) {
+            for (int j = 1; j <= i / 2; j++) {
+                if (i % j == 0 && !bp[i - j]) {
+                    bp[i] = true;
+                    break;
+                }
+            }
+        }
+        return bp[N];
+    }
+
+    // 1018
+    public List<Boolean> prefixesDivBy5(int[] A) {
+        List<Boolean> ans = new ArrayList<>();
+        int curr = 0;
+        for (int a : A) {
+            curr = (curr * 2 + a) % 5;
+            ans.add(curr == 0);
+        }
+        return ans;
+    }
+
+    // 1013 总感觉代码好蠢
+    public boolean canThreePartsEqualSum(int[] A) {
+        int count = 0, curr = 0;
+        for (int a : A) {
+            count += a;
+        }
+        if (count % 3 != 0) {
+            return false;
+        }
+        boolean first = false, second = false, third = false;
+        for (int a : A) {
+            curr += a;
+            if (curr == count / 3) {
+                if (!first) {
+                    curr = 0;
+                    first = true;
+                } else if (!second) {
+                    curr = 0;
+                    second = true;
+                } else {
+                    third = true;
+                }
+            }
+        }
+        return third;
+    }
+
+    // 1010
+    public int numPairsDivisibleBy60(int[] time) {
+        int count = 0;
+        int[] seconds = new int[60];
+        for (int t : time) {
+            int tmp = t % 60;
+            if (tmp == 0) {
+                count += seconds[0];
+            } else {
+                count += seconds[60 - tmp];
+            }
+            seconds[tmp]++;
+        }
+        return count;
+
+        // 集合
+        /*Map<Integer, Integer> map = new HashMap<>();
+        if (time.length < 2) {
+            return 0;
+        }
+        int count = 0;
+        map.put(time[0] % 60, 1);
+        for (int i = 1; i < time.length; i++) {
+            int tmp = time[i] % 60;
+            if (tmp == 0) {
+                int tmp2 = map.getOrDefault(0, 0);
+                map.put(0, tmp2 + 1);
+                count += tmp2;
+            } else {
+                count += map.getOrDefault(60 - tmp, 0);
+                map.put(tmp, map.getOrDefault(tmp, 0) + 1);
+            }
+        }
+        return count;*/
+    }
+
+    // 1009
+    public int bitwiseComplement(int N) {
+        if (N == 0) {
+            return 1;
+        }
+        for (int i = 0; i < 32; i++) {
+            if ((int) Math.pow(2, i) - 1 >= N) {
+                return (int) Math.pow(2, i) - 1 - N;
+            }
+        }
+        return 0;
+    }
+
+    // 1005
+    public int largestSumAfterKNegations(int[] A, int K) {
+        Arrays.sort(A);
+        int count = 0, min = Integer.MAX_VALUE;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] < 0 && K-- > 0) {
+                A[i] = -A[i];
+            }
+            count += A[i];
+            min = Math.min(min, A[i]);
+        }
+        if (K % 2 == 1) {
+            count -= 2 * min;
+        }
+        return count;
+    }
+
+    // 1002
+    public List<String> commonChars(String[] A) {
+        int[][] aa = new int[A.length][26];
+        List<String> ans = new ArrayList<>();
+        int index = 0;
+        for (String a : A) {
+            for (char c : a.toCharArray()) {
+                aa[index][c - 'a']++;
+            }
+            index++;
+        }
+        for (int i = 0; i < 26; i++) {
+            int tmp = aa[0][i];
+            for (int j = 1; j < aa.length; j++) {
+                if (aa[j][i] < 1) {
+                    tmp = 0;
+                    break;
+                } else {
+                    tmp = Math.min(tmp, aa[j][i]);
+                }
+            }
+            while (tmp > 0) {
+                ans.add((char) (i + 'a') + "");
+                tmp--;
+            }
+        }
+        return ans;
+    }
+
+    // 999
+    public int numRookCaptures(char[][] board) {
+        int x = -1, y = -1, count = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'R') {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+            if (x >= 0) {
+                break;
+            }
+        }
+        int x0 = x, y0 = y;
+        while (x0 >= 0) {
+            if (board[x0][y] == '.') {
+                break;
+            } else if (board[x0][y] == 'P') {
+                count++;
+                break;
+            }
+            x0--;
+        }
+        x0 = x;
+        while (x0 < 8) {
+            if (board[x0][y] == '.') {
+                break;
+            } else if (board[x0][y] == 'P') {
+                count++;
+                break;
+            }
+            x0++;
+        }
+        while (y0 >= 0) {
+            if (board[x][y0] == '.') {
+                break;
+            } else if (board[x][y0] == 'P') {
+                count++;
+                break;
+            }
+            y0--;
+        }
+        y0 = y;
+        while (y0 < 8) {
+            if (board[x][y0] == '.') {
+                break;
+            } else if (board[x][y0] == 'P') {
+                count++;
+                break;
+            }
+            y0++;
+        }
+        return count;
+    }
+
+    // 997
+    public int findJudge(int N, int[][] trust) {
+        int[] agree = new int[N];
+        for (int[] data : trust) {
+            agree[--data[0]]--;
+            agree[--data[1]]++;
+        }
+        for (int i = 0; i < N; i++) {
+            if (agree[i] == N - 1) {
+                return i + 1;
+            }
+        }
+        return -1;
     }
 
     // 989
@@ -88,11 +316,6 @@ public class Day19Solution {
             ans[index++] = preCount;
         }
         return ans;
-    }
-
-    private int handleQuery(int count, int curr, int query) {
-
-        return count;
     }
 
     // 977
