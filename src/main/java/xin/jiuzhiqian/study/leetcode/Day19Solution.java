@@ -11,12 +11,55 @@ public class Day19Solution {
     public static void main(String[] args) {
         Day19Solution solution = new Day19Solution();
         int x = 2, y = 3, bound = 10;
-        String[] A = {"bella", "label", "roller"};
+        String[] A = {"dyiclysmffuhibgfvapygkorkqllqlvokosagyelotobicwcmebnpznjbirzrzsrtzjxhsfpiwyfhzyonmuabtlwin", "ndqeyhhcquplmznwslewjzuyfgklssvkqxmqjpwhrshycmvrb", "ulrrbpspyudncdlbkxkrqpivfftrggemkpyjl", "boygirdlggnh", "xmqohbyqwagkjzpyawsydmdaattthmuvjbzwpyopyafphx", "nulvimegcsiwvhwuiyednoxpugfeimnnyeoczuzxgxbqjvegcxeqnjbwnbvowastqhojepisusvsidhqmszbrnynkyop", "hiefuovybkpgzygprmndrkyspoiyapdwkxebgsmodhzpx", "juldqdzeskpffaoqcyyxiqqowsalqumddcufhouhrskozhlmobiwzxnhdkidr", "lnnvsdcrvzfmrvurucrzlfyigcycffpiuoo", "oxgaskztzroxuntiwlfyufddl", "tfspedteabxatkaypitjfkhkkigdwdkctqbczcugripkgcyfezpuklfqfcsccboarbfbjfrkxp", "qnagrpfzlyrouolqquytwnwnsqnmuzphne", "eeilfdaookieawrrbvtnqfzcricvhpiv", "sisvsjzyrbdsjcwwygdnxcjhzhsxhpceqz", "yhouqhjevqxtecomahbwoptzlkyvjexhzcbccusbjjdgcfzlkoqwiwue", "hwxxighzvceaplsycajkhynkhzkwkouszwaiuzqcleyflqrxgjsvlegvupzqijbornbfwpefhxekgpuvgiyeudhncv", "cpwcjwgbcquirnsazumgjjcltitmeyfaudbnbqhflvecjsupjmgwfbjo", "teyygdmmyadppuopvqdodaczob", "qaeowuwqsqffvibrtxnjnzvzuuonrkwpysyxvkijemmpdmtnqxwekbpfzs", "qqxpxpmemkldghbmbyxpkwgkaykaerhmwwjonrhcsubchs"};
+        String chars = "usdruypficfbpfbivlrhutcgvyjenlxzeovdyjtgvvfdjzcmikjraspdfp";
         int[] nums = {0, 2, 1, -6, 6, -7, 9, 1, 2, 0, 1};
         int K = 123;
+        //		测试用例:["dyiclysmffuhibgfvapygkorkqllqlvokosagyelotobicwcmebnpznjbirzrzsrtzjxhsfpiwyfhzyonmuabtlwin","ndqeyhhcquplmznwslewjzuyfgklssvkqxmqjpwhrshycmvrb","ulrrbpspyudncdlbkxkrqpivfftrggemkpyjl","boygirdlggnh","xmqohbyqwagkjzpyawsydmdaattthmuvjbzwpyopyafphx","nulvimegcsiwvhwuiyednoxpugfeimnnyeoczuzxgxbqjvegcxeqnjbwnbvowastqhojepisusvsidhqmszbrnynkyop","hiefuovybkpgzygprmndrkyspoiyapdwkxebgsmodhzpx","juldqdzeskpffaoqcyyxiqqowsalqumddcufhouhrskozhlmobiwzxnhdkidr","lnnvsdcrvzfmrvurucrzlfyigcycffpiuoo","oxgaskztzroxuntiwlfyufddl","tfspedteabxatkaypitjfkhkkigdwdkctqbczcugripkgcyfezpuklfqfcsccboarbfbjfrkxp","qnagrpfzlyrouolqquytwnwnsqnmuzphne","eeilfdaookieawrrbvtnqfzcricvhpiv","sisvsjzyrbdsjcwwygdnxcjhzhsxhpceqz","yhouqhjevqxtecomahbwoptzlkyvjexhzcbccusbjjdgcfzlkoqwiwue","hwxxighzvceaplsycajkhynkhzkwkouszwaiuzqcleyflqrxgjsvlegvupzqijbornbfwpefhxekgpuvgiyeudhncv","cpwcjwgbcquirnsazumgjjcltitmeyfaudbnbqhflvecjsupjmgwfbjo","teyygdmmyadppuopvqdodaczob","qaeowuwqsqffvibrtxnjnzvzuuonrkwpysyxvk... (show balloon)
+
         // System.out.println(solution.powerfulIntegers(x, y, bound));
         // System.out.println(solution.largestSumAfterKNegations(nums, 6));
-        System.out.println(solution.canThreePartsEqualSum(nums));
+        System.out.println(solution.countCharacters(A, chars));
+    }
+
+    // 1160
+    public int countCharacters(String[] words, String chars) {
+        int[] cc = new int[26];
+        for (char c : chars.toCharArray()) {
+            cc[c - 'a']++;
+        }
+        System.out.println(Arrays.toString(cc));
+        int[] c2;
+        boolean mark;
+        int count = 0;
+        for (String word : words) {
+            c2 = Arrays.copyOf(cc,26);
+            mark = true;
+            for (int i = 0; i < word.length(); i++) {
+                if (c2[word.charAt(i) - 'a']-- < 1) {
+                    mark = false;
+                    break;
+                }
+            }
+            if (mark) {
+                count += word.length();
+            }
+        }
+        return count;
+    }
+
+    // 1033
+    public int[] numMovesStones(int a, int b, int c) {
+        int[] arr = {a, b, c};
+        Arrays.sort(arr);
+        int[] ans = new int[2];
+        ans[1] = arr[2] - arr[0] - 2;
+        if (arr[1] - arr[0] == 2 || (arr[2] - arr[1] == 2)) {
+            ans[0] = 1;
+        } else {
+            ans[0] = ((arr[1] - arr[0] == 1) ? 0 : 1) + ((arr[2] - arr[1] == 1) ? 0 : 1);
+        }
+        return ans;
     }
 
     // 1025 todo
