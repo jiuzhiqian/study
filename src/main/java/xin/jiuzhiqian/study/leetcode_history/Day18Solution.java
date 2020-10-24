@@ -1,6 +1,4 @@
-package xin.jiuzhiqian.study.leetcode;
-
-import org.springframework.data.relational.core.sql.In;
+package xin.jiuzhiqian.study.leetcode_history;
 
 import java.util.*;
 
@@ -10,7 +8,7 @@ import java.util.*;
 public class Day18Solution {
     public static void main(String[] args) {
         Day18Solution solution = new Day18Solution();
-        // String[] deck = {"test.email+alex@leetcode.com","test.email.leet+alex@code.com"};
+        // String[] deck = {"test.email+alex@leetcode_history.com","test.email.leet+alex@code.com"};
         // String s = "ab-cd";
         // System.out.println(solution.numUniqueEmails(deck));
         // System.out.println(Arrays.toString(solution.sortArrayByParityII(deck)));

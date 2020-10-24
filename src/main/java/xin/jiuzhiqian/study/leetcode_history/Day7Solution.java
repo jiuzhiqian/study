@@ -1,6 +1,6 @@
-package xin.jiuzhiqian.study.leetcode;
+package xin.jiuzhiqian.study.leetcode_history;
 
-import org.springframework.data.relational.core.sql.In;
+import xin.jiuzhiqian.study.leetcode_history.ListNode;
 
 import java.util.HashMap;
 import java.util.HashSet;

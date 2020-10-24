@@ -1,7 +1,8 @@
-package xin.jiuzhiqian.study.leetcode;
+package xin.jiuzhiqian.study.leetcode_history;
+
+import xin.jiuzhiqian.study.leetcode_history.ListNode;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Stack;
 
 /**

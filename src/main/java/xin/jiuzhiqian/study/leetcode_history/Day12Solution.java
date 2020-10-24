@@ -1,6 +1,4 @@
-package xin.jiuzhiqian.study.leetcode;
-
-import org.springframework.data.relational.core.sql.In;
+package xin.jiuzhiqian.study.leetcode_history;
 
 import java.util.*;
 
@@ -15,7 +13,7 @@ public class Day12Solution {
 //        int num = 1;
 //        String word = "HELLOZZA";
 //        System.out.println(Arrays.toString(solution.findRelativeRanks(nums)));
-        String s = "L take Leetcode contest";
+        String s = "L take leetcode_history contest";
         System.out.println(solution.reverseWords(s));
     }
 

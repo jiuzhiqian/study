@@ -1,4 +1,4 @@
-package xin.jiuzhiqian.study.leetcode;
+package xin.jiuzhiqian.study.leetcode_history;
 
 /**
  * @author : zhou

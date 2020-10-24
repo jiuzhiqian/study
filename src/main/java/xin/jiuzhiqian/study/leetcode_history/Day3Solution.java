@@ -1,6 +1,4 @@
-package xin.jiuzhiqian.study.leetcode;
-
-import org.apache.logging.log4j.util.Strings;
+package xin.jiuzhiqian.study.leetcode_history;
 
 /**
  * @author : zhou

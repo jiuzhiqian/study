@@ -1,7 +1,6 @@
-package xin.jiuzhiqian.study.leetcode;
+package xin.jiuzhiqian.study.leetcode_history;
 
-import javassist.Translator;
-import org.springframework.data.relational.core.sql.In;
+import xin.jiuzhiqian.study.leetcode_history.ListNode;
 
 import java.util.*;
 

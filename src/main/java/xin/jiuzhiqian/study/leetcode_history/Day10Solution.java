@@ -1,7 +1,6 @@
-package xin.jiuzhiqian.study.leetcode;
+package xin.jiuzhiqian.study.leetcode_history;
 
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author : zhou
