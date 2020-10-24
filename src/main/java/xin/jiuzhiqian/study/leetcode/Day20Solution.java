@@ -2,6 +2,7 @@ package xin.jiuzhiqian.study.leetcode;
 
 import org.springframework.data.relational.core.sql.In;
 
+import javax.sound.midi.Soundbank;
 import java.util.*;
 
 /**
@@ -10,10 +11,84 @@ import java.util.*;
 public class Day20Solution {
     public static void main(String[] args) {
         Day20Solution solution = new Day20Solution();
-        int[] aa = {2, 7, 4, 1, 8, 1};
-        Stack<Character> stack = new Stack<>();
-        System.out.println(solution.gcdOfStrings("ABABABAB", "ABAB"));
+        int[] aa = {1, 5, 2, 0, 6, 8, 0, 6, 0};
+        int[] ab = {0};
+        System.out.println(Arrays.toString(solution.distributeCandies(60, 4)));
+        // solution.duplicateZeros(aa);
+        // solution.duplicateZeros(ab);
+        // System.out.println(solution.gcdOfStrings("ABABABAB", "ABAB"));
         // System.out.println(Arrays.deepToString(solution.allCellsDistOrder(2, 2, 0, 1)));
+    }
+
+    // 1103
+    public int[] distributeCandies(int candies, int num_people) {
+        int[] ans = new int[num_people];
+        int index = 0;
+        while (candies > index) {
+            ans[index++ % num_people] += index;
+            candies -= index;
+        }
+        System.out.println(candies);
+        System.out.println(index);
+        if (candies > 0) {
+            ans[index % num_people] += candies;
+        }
+        return ans;
+    }
+
+    // 1089
+    public void duplicateZeros(int[] arr) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                count++;
+            }
+        }
+        int ptr = arr.length - 1;
+        while (count != 0) {
+            if (arr[ptr] == 0) {
+                count--;
+                if (ptr + count < arr.length) {
+                    arr[ptr + count] = 0;
+                }
+                if (ptr + 1 + count < arr.length) {
+                    arr[ptr + 1 + count] = 0;
+                }
+            } else {
+                if (ptr + count < arr.length) {
+                    arr[ptr + count] = arr[ptr];
+                }
+            }
+            ptr--;
+        }
+    }
+
+    // 1078
+    public String[] findOcurrences(String text, String first, String second) {
+        String[] arr = text.split(" ");
+        List<String> ans = new ArrayList<>();
+        boolean matchFirst = false, matchSecond = false;
+        for (String word : arr) {
+            if (matchFirst) {
+                if (matchSecond) {
+                    matchSecond = false;
+                    ans.add(word);
+                    if (!word.equals(first)) {
+                        matchFirst = false;
+                    }
+                    if (matchFirst && word.equals(second)) {
+                        matchSecond = true;
+                    }
+                } else if (word.equals(second)) {
+                    matchSecond = true;
+                } else if (!word.equals(first)) {
+                    matchFirst = false;
+                }
+            } else if (word.equals(first)) {
+                matchFirst = true;
+            }
+        }
+        return ans.toArray(new String[0]);
     }
 
     // 1071
