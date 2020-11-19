@@ -16,25 +16,31 @@ public class Day23Solution {
         Day23Solution solution = new Day23Solution();
         // System.out.println(Arrays.toString(solution.getNoZeroIntegers(214)));
         int[][] arr = {{1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}, {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-        System.out.println(Arrays.toString(solution.kWeakestRows(arr, 1)));
+        System.out.println(Arrays.toString(solution.kWeakestRows(arr, 2)));
     }
 
     // 1337
     public int[] kWeakestRows(int[][] mat, int k) {
-        String[] countArr = new String[mat.length];
+        int[] task = new int[mat.length];
         for (int i = 0; i < mat.length; i++) {
-            int count = 0;
-            for (int j = 0; j < mat[0].length; j++) {
-                if (mat[i][j] == 1) {
-                    count++;
+            int c = 0;
+            for (int j = 0; j < mat[i].length; j++) {
+                c += mat[i][j];
+            }
+            task[i] = c;
+        }
+        int[] ans = new int[k];
+        int num = 0, index = 0;
+        while (index != k) {
+            for (int i = 0; i < mat.length; i++) {
+                if (task[i] == num) {
+                    ans[index++] = i;
+                    if (index == k) {
+                        break;
+                    }
                 }
             }
-        }
-        Arrays.sort(countArr);
-        int[] ans = new int[k];
-        for (int i = 0; i < k; i++) {
-            String[] s = countArr[i].split("_");
-            ans[i] = Integer.parseInt(s[1]);
+            num++;
         }
         return ans;
     }
